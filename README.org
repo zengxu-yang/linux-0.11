@@ -1,0 +1,1 @@
+Build Linux kernel 0.11 on modern GCC 12. Run and debug it on modern QEMU with GDB. This is an ideal lab environment for OS study as Linux 0.11 is relatively small.
