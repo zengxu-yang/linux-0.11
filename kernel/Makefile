@@ -6,13 +6,13 @@
 # unless it's something special (ie not a .c file).
 #
 
-AR	=gar
-AS	=gas
-LD	=gld
-LDFLAGS	=-s -x
+AR	=ar
+AS	=as --32
+LD	=ld
+LDFLAGS	=-m elf_i386
 CC	=gcc
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -fcombine-regs \
-	-finline-functions -mstring-insns -nostdinc -I../include
+CFLAGS	=-Wall -O -std=gnu89 -fstrength-reduce -fomit-frame-pointer -m32 \
+	-finline-functions -fno-stack-protector -nostdinc -fno-builtin -g -I../include
 CPP	=gcc -E -nostdinc -I../include
 
 .c.s:
@@ -29,7 +29,7 @@ OBJS  = sched.o system_call.o traps.o asm.o fork.o \
 	signal.o mktime.o
 
 kernel.o: $(OBJS)
-	$(LD) -r -o kernel.o $(OBJS)
+	$(LD) $(LDFLAGS) -r -o kernel.o $(OBJS)
 	sync
 
 clean:

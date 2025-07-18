@@ -7,12 +7,12 @@ RAMDISK = #-DRAMDISK=512
 AS86	=as86 -0 -a
 LD86	=ld86 -0
 
-AS	=gas
-LD	=gld
-LDFLAGS	=-s -x -M
+AS	=as --32
+LD	=ld
+LDFLAGS	=-m elf_i386 -M -Ttext 0 -e startup_32
 CC	=gcc $(RAMDISK)
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
--fcombine-regs -mstring-insns
+CFLAGS	=-Wall -O -std=gnu89 -fstrength-reduce -fomit-frame-pointer \
+-fno-stack-protector -fno-builtin -g -m32
 CPP	=cpp -nostdinc -Iinclude
 
 #
@@ -20,7 +20,7 @@ CPP	=cpp -nostdinc -Iinclude
 # This can be either FLOPPY, /dev/xxxx or empty, in which case the
 # default of /dev/hd6 is used by 'build'.
 #
-ROOT_DEV=/dev/hd6
+ROOT_DEV=
 
 ARCHIVES=kernel/kernel.o mm/mm.o fs/fs.o
 DRIVERS =kernel/blk_drv/blk_drv.a kernel/chr_drv/chr_drv.a
@@ -31,7 +31,7 @@ LIBS	=lib/lib.a
 	$(CC) $(CFLAGS) \
 	-nostdinc -Iinclude -S -o $*.s $<
 .s.o:
-	$(AS) -c -o $*.o $<
+	$(AS) -o $*.o $<
 .c.o:
 	$(CC) $(CFLAGS) \
 	-nostdinc -Iinclude -c -o $*.o $<
@@ -39,8 +39,9 @@ LIBS	=lib/lib.a
 all:	Image
 
 Image: boot/bootsect boot/setup tools/system tools/build
-	tools/build boot/bootsect boot/setup tools/system $(ROOT_DEV) > Image
-	sync
+	objcopy  -O binary -R .note -R .comment tools/system tools/system.bin
+	tools/build boot/bootsect boot/setup tools/system.bin $(ROOT_DEV) > Image
+#	sync
 
 disk: Image
 	dd bs=8192 if=Image of=/dev/PS0
@@ -93,6 +94,12 @@ tmp.s:	boot/bootsect.s tools/system
 	(echo -n "SYSSIZE = (";ls -l tools/system | grep system \
 		| cut -c25-31 | tr '\012' ' '; echo "+ 15 ) / 16") > tmp.s
 	cat boot/bootsect.s >> tmp.s
+
+run:
+	qemu-system-i386 -drive format=raw,file=Image,index=0,if=floppy -boot a -hdb hdc-0.11.img -m 16 -machine pc-i440fx-2.5
+
+debug:
+	qemu-system-i386 -s -S -drive format=raw,file=Image,index=0,if=floppy -boot a -hdb hdc-0.11.img -m 16 -machine pc-i440fx-2.5 -monitor stdio
 
 clean:
 	rm -f Image System.map tmp_make core boot/bootsect boot/setup

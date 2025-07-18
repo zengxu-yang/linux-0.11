@@ -6,13 +6,13 @@
 # unless it's something special (ie not a .c file).
 #
 
-AR	=gar
-AS	=gas
-LD	=gld
-LDFLAGS	=-s -x
+AR	=ar
+AS	=as --32
+LD	=ld
+LDFLAGS	=-m elf_i386
 CC	=gcc
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -fcombine-regs \
-	-finline-functions -mstring-insns -nostdinc -I../include
+CFLAGS	=-m32 -g -Wall -O -fstrength-reduce -fomit-frame-pointer \
+	-finline-functions -fno-stack-protector -nostdinc -I../include
 CPP	=gcc -E -nostdinc -I../include
 
 .c.s:
