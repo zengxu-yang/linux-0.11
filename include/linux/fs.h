@@ -178,6 +178,7 @@ extern int create_block(struct m_inode * inode,int block);
 extern struct m_inode * namei(const char * pathname);
 extern int open_namei(const char * pathname, int flag, int mode,
 	struct m_inode ** res_inode);
+extern void invalidate_inodes(int dev);
 extern void iput(struct m_inode * inode);
 extern struct m_inode * iget(int dev,int nr);
 extern struct m_inode * get_empty_inode(void);
@@ -195,6 +196,7 @@ extern struct m_inode * new_inode(int dev);
 extern void free_inode(struct m_inode * inode);
 extern int sync_dev(int dev);
 extern struct super_block * get_super(int dev);
+extern void put_super(int dev);
 extern int ROOT_DEV;
 
 extern void mount_root(void);

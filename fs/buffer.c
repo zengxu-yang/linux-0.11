@@ -208,7 +208,7 @@ struct buffer_head * getblk(int dev,int block)
 	struct buffer_head * tmp, * bh;
 
 repeat:
-	if (bh = get_hash_table(dev,block))
+	if ((bh = get_hash_table(dev,block)))
 		return bh;
 	tmp = free_list;
 	do {
@@ -300,7 +300,7 @@ void bread_page(unsigned long address,int dev,int b[4])
 
 	for (i=0 ; i<4 ; i++)
 		if (b[i]) {
-			if (bh[i] = getblk(dev,b[i]))
+			if ((bh[i] = getblk(dev,b[i])))
 				if (!bh[i]->b_uptodate)
 					ll_rw_block(READ,bh[i]);
 		} else

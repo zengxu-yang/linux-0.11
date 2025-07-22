@@ -101,7 +101,7 @@ static long main_memory_start = 0;
 
 struct drive_info { char dummy[32]; } drive_info;
 
-void main(void)		/* This really IS void, no error here. */
+int main(void)		/* This really IS void, no error here. */
 {			/* The startup routine assumes (well, ...) this */
 /*
  * Interrupts are still disabled. Do necessary setups, then
@@ -137,6 +137,7 @@ void main(void)		/* This really IS void, no error here. */
 	move_to_user_mode();
 	if (!fork()) {		/* we count on this going ok */
 		init();
+	return 0;
 	}
 /*
  *   NOTE!!   For any other task 'pause()' would mean we have to get a
