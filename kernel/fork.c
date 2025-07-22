@@ -18,6 +18,7 @@
 #include <asm/system.h>
 
 extern void write_verify(unsigned long address);
+extern void memcpy(struct task_struct *, struct task_struct *, long int);
 
 long last_pid=0;
 
@@ -78,7 +79,11 @@ int copy_process(int nr,long ebp,long edi,long esi,long gs,long none,
 	if (!p)
 		return -EAGAIN;
 	task[nr] = p;
+#if 0 /* The DF flag may be wrong. Must set DF first or call memcpy. */
 	*p = *current;	/* NOTE! this doesn't copy the supervisor stack */
+#else
+	memcpy(p, current, sizeof(struct task_struct));
+#endif
 	p->state = TASK_UNINTERRUPTIBLE;
 	p->pid = last_pid;
 	p->father = current->pid;
