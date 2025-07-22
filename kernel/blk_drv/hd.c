@@ -72,7 +72,7 @@ int sys_setup(void * BIOS)
 {
 	static int callable = 1;
 	int i,drive;
-	unsigned char cmos_disks;
+	//unsigned char cmos_disks;
 	struct partition *p;
 	struct buffer_head * bh;
 
@@ -120,7 +120,7 @@ int sys_setup(void * BIOS)
 		an AT controller hard disk for that drive.
 
 		
-	*/
+	*//* This is obsolete and not supported by QEMU.
 
 	if ((cmos_disks = CMOS_READ(0x12)) & 0xf0)
 		if (cmos_disks & 0x0f)
@@ -128,7 +128,7 @@ int sys_setup(void * BIOS)
 		else
 			NR_HD = 1;
 	else
-		NR_HD = 0;
+		NR_HD = 0; */
 	for (i = NR_HD ; i < 2 ; i++) {
 		hd[i*5].start_sect = 0;
 		hd[i*5].nr_sects = 0;
