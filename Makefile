@@ -96,10 +96,10 @@ tmp.s:	boot/bootsect.s tools/system
 	cat boot/bootsect.s >> tmp.s
 
 run:
-	qemu-system-i386 -drive format=raw,file=Image,index=0,if=floppy -boot a -hdb hdc-0.11.img -m 16 -machine pc-i440fx-2.5
+	qemu-system-i386 -drive format=raw,file=Image,index=0,if=floppy -boot a -hda hdc-0.11.img -m 16 -machine pc-i440fx-2.5
 
 debug:
-	qemu-system-i386 -s -S -drive format=raw,file=Image,index=0,if=floppy -boot a -hdb hdc-0.11.img -m 16 -machine pc-i440fx-2.5 -monitor stdio
+	qemu-system-i386 -s -S -drive format=raw,file=Image,index=0,if=floppy -boot a -hda hdc-0.11.img -m 16 -machine pc-i440fx-2.5 -monitor stdio
 
 clean:
 	rm -f Image System.map tmp_make core boot/bootsect boot/setup
