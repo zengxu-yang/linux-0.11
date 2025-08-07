@@ -11,7 +11,7 @@ AS	=as --32
 LD	=ld
 LDFLAGS	=-m elf_i386
 CC	=gcc
-CFLAGS	=-Wall -O -std=gnu89 -fstrength-reduce -fomit-frame-pointer -m32 \
+CFLAGS	=-Wall -std=gnu89 -fstrength-reduce -fomit-frame-pointer -m32 \
 	-finline-functions -fno-stack-protector -nostdinc -fno-builtin -g -I../include
 CPP	=gcc -E -nostdinc -I../include
 
