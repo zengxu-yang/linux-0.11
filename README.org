@@ -10,8 +10,10 @@ It has been tested on Debian 12. To run or debug it, you need to download the ro
 
 To install it, you need to install necessary tools.
 #+begin_src text
-  sudo apt install gcc gdb make bin86 qemu-system-x86
+  sudo apt install gcc gdb make bin86 qemu-system-x86 libc6-dev-i386
 #+end_src
+=libc6-dev-i386= is only needed to build 32-bit =tools/build.c= which is used to create =Image=.
+
 Clone the source code, then
 #+begin_src text
   make clean
