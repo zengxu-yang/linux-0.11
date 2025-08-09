@@ -5,3 +5,16 @@ Features
 - Can be source debugged by GDB.
 - GCC optimization is disabled for better debugging experience.
 - QEMU Monitor is enabled when debugging Linux kernel 0.11 for more CPU internal info.
+
+It has been tested on Debian 12. To run or debug it, you need to download the root image from [[https://github.com/JiangJiangjungle/oslab/blob/master/hdc-0.11.img][here]] and put it in the project root directory.
+
+To install it, you need to install necessary tools.
+#+begin_src text
+  sudo apt install gcc gdb make bin86 qemu-system-x86
+#+end_src
+Clone the source code, then
+#+begin_src text
+  make clean
+  make
+#+end_src
+to build it. QEMU needs to be patched to debug 16-bit real mode code.
