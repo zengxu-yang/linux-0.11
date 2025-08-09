@@ -162,7 +162,7 @@ static int controller_ready(void)
 {
 	int retries=10000;
 
-	while (--retries && (inb_p(HD_STATUS)&0xc0)!=0x40);
+	while (--retries && (inb_p(HD_STATUS)&0x80));
 	return (retries);
 }
 
