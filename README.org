@@ -1,4 +1,4 @@
-Build Linux kernel 0.11 on modern GCC 12. Run and debug it on modern QEMU with GDB. This is an ideal lab environment for OS study as Linux 0.11 is relatively small.
+Build Linux kernel 0.11 on modern GCC 12. Run and debug it on modern QEMU with GDB. This is an ideal lab environment for OS study as Linux 0.11 is relatively small. Compared to Bochs, QEMU supports source level debugging with GDB, which can be very convenient for learning the Linux kernel.
 
 Features
 - Patched Linux kernel 0.11 that can be built on modern GCC 12 and runs on QEMU.
@@ -18,3 +18,7 @@ Clone the source code, then
   make
 #+end_src
 to build it. QEMU needs to be patched to debug 16-bit real mode code.
+
+Enter =make run= to run it and =make debug= to debug it.
+
+When entering =make debug=, QEMU will stop at address =0x000ffff0= in real mode. In another terminal, enter =gdb tools/system= to start GDB, then =target remote :1234= to start debugging. The QEMU Monitor can be used together with GDB to inspect some internal registers that are not shown in GDB, such as GDT/IDT/LDT/TR.
