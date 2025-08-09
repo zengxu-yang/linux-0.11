@@ -1,1 +1,7 @@
 Build Linux kernel 0.11 on modern GCC 12. Run and debug it on modern QEMU with GDB. This is an ideal lab environment for OS study as Linux 0.11 is relatively small.
+
+Features
+- Patched Linux kernel 0.11 that can be built on modern GCC 12 and runs on QEMU.
+- Can be source debugged by GDB.
+- GCC optimization is disabled for better debugging experience.
+- QEMU Monitor is enabled when debugging Linux kernel 0.11 for more CPU internal info.
